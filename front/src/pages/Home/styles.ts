@@ -47,12 +47,22 @@ export const Container = styled.div`
 
       background-color: var(--color-white-translucent);
 
+      h1 {
+        margin-right: auto;
+        margin-left: 1.5rem;
+      }
+
+      label {
+        margin-top: 2rem; 
+        margin-right: auto;
+        margin-left: 1.5rem;
+      }
+
       input {
         width: 90%;
         height: 3rem;
         font-size: 1rem;  
         padding: 0 2%;
-        margin-top: 2rem; 
       }
 
       button {
