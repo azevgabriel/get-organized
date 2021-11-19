@@ -1,8 +1,8 @@
 import { Container } from './styles'
 import logoPng from '../../assets/logo.png';
 import { useCallback, useState } from 'react';
-import { api } from '../../services/api';
 import { useAuth } from '../../contexts/auth';
+import { useToast } from '../../contexts/toast';
 
 interface ICrendentails {
   username: string
@@ -12,6 +12,7 @@ interface ICrendentails {
 export const Home = () => {
 
   const {signIn} = useAuth();
+  const { addToast } = useToast()
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -23,11 +24,15 @@ export const Home = () => {
         login: username, 
         senha: password
       });
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      addToast({
+        type: 'error',
+        title: 'Falha de autenticação.',
+        description: 'Verifique seu login e senha.',
+      }); 
     }
 
-  }, [signIn]);
+  }, [addToast, signIn]);
 
   return (
     <Container>

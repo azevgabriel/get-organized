@@ -7,6 +7,7 @@ export default createGlobalStyle`
     --color-beige: #EEEEEE;
     --color-white-translucent: rgba(255, 255, 255, 0.6);
     --color-brown-dark: #6D4C2F;
+    --z-index-toast: 10;
   }
 
   * {

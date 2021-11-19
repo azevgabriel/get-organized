@@ -56,6 +56,7 @@ export const Container = styled.div`
         margin-top: 2rem; 
         margin-right: auto;
         margin-left: 1.5rem;
+        margin-bottom: 0.2rem;
       }
 
       input {
