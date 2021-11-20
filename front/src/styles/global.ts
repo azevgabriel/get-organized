@@ -57,5 +57,22 @@ export default createGlobalStyle`
       font-size: 93.5%;
     }
   }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 2px;
+    }
+
+  ::-webkit-scrollbar-track {
+      background-color: transparent;  
+  }
+
+  ::-webkit-scrollbar-thumb {
+      background-color: #DDDDDD;
+      border-radius: 16px;
+      @media (max-width: 1000px) {
+          background-color: #aaa;
+      }
+  }
   
 `;

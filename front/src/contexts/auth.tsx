@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, ReactNode, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, ReactNode, useState } from "react";
 import { api } from "../services/api";
 
 interface SignInCredentials {
@@ -22,15 +22,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   
   const [token, setToken] = useState("");
 
-  useEffect(() => {
-    const token = localStorage.getItem("@GetOrganized:TOKEN");
-
-    if(token){
-      api.defaults.headers.common.authorization = `Bearer ${token}`;
-      setToken(token);
-    }
-  }, [])
-
   const signIn = useCallback(async ({ login, senha }) => {
     const response = await api.post('/login', {
       login,
@@ -43,7 +34,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       throw new Error('Invalid credentials');
     } else {
       localStorage.setItem('@GetOrganized:TOKEN', token);
-      api.defaults.headers.common.authorization = `Bearer ${token}`;
       setToken(token);
     }
   }, []);

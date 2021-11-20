@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Container } from './styles'
 
 /* Components */
@@ -12,12 +12,19 @@ import { useToast } from '../../contexts/toast';
 import { IoIosExit } from 'react-icons/io'
 import { BiTask } from 'react-icons/bi'
 import { useModal } from '../../contexts/modal';
+import { useCard } from '../../contexts/card';
+
+import { ICard } from '../../interfaces/Card';
+import { Task } from '../../components/Task';
 
 export const Home = () => {
 
   const { signOut } = useAuth();
   const { addToast } = useToast();
   const {handleModal} = useModal()
+  const { getCards } = useCard();
+
+  const [cards, setCards] = useState<ICard[]>([]);
 
   const handleClick = useCallback(() => {
     
@@ -30,10 +37,19 @@ export const Home = () => {
 
   }, [addToast, signOut]);
 
+  useEffect(() => {
+    const load = async () => {
+      setCards(
+        await getCards()
+      )
+    };
+    load();
+  }, [getCards])
+
   return (
     <>
       <Modal 
-        title="Adicionar uma nova tarefa"
+        type="add"
       />
       <Container>
         <nav>
@@ -49,8 +65,44 @@ export const Home = () => {
             <BiTask size={26} />
             Criar Tarefa
           </button>
-          <h1>Bem vindo!</h1>
+          <h1>Get Organized</h1>
         </nav>
+        <main>
+          <div className="tasksWrapper">
+            <h2>Tarefas a fazer</h2>
+            <div className="scrollLock">
+              <Task/>
+              <Task/>
+              <Task/>
+              <Task/>
+              <Task/>
+              <Task/>
+              <Task/>
+              <Task/>
+              <Task/>
+              <Task/>
+              <Task/>
+              <Task/>
+              <Task/>
+              <Task/>
+              <Task/>
+            </div>
+          </div>
+          <div className="tasksWrapper">
+            <h2>Tarefas em andamento</h2>
+            <div className="scrollLock">
+              <Task/>
+              
+              <Task/>
+              <Task/>
+              <Task/>
+              <Task/>
+            </div>
+          </div>
+          <div className="tasksWrapper">
+            <h2>Tarefas concluídas</h2>
+          </div>
+        </main>
       </Container>
     </>
   )

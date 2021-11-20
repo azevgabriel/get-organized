@@ -4,6 +4,7 @@ export const Container = styled.div`
   width: 100vw;
   height: 100vh;
 
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 
@@ -15,12 +16,13 @@ export const Container = styled.div`
 
     width: 100%;
     height: 10%;
-    background-color: var(--color-beige);
+    background-color: var(--color-brown);
 
     h1 {
       font-size: 1.8rem;
       margin-right: 2%;
       margin-left: auto;  
+      color: var(--color-white);
     }
 
     button { 
@@ -29,19 +31,51 @@ export const Container = styled.div`
       align-items: center;
       font-size: 1.4rem;
       margin-left: 2%;
-      color: var(--color-brown);
+      color: var(--color-beige);  
+      background-color: transparent;
+      transition: all 0.2s;
 
       svg {
         margin-right: 0.5rem;
-        color: var(--color-brown);
-        transition: color 0.2s;
+        color: var(--color-beige);
       }
 
       &:hover {
-        svg {
-          color: var(--color-brown-dark);
-        }
-        color: var(--color-brown-dark);
+        filter: brightness(.8); 
+      }
+    }
+  }
+
+  main {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 90%;
+    background-color: var(--color-beige);
+
+    .tasksWrapper {
+      display: flex;
+      flex-direction: column;
+      width: 33%;
+      height: calc(100% - 1.5rem - 1%);
+      align-items: center;
+      margin: 1% 0%;
+      border-left: 3px solid var(--color-brown);
+      
+      .scrollLock {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        border-left: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      &:first-child {
+        border-left: none;
       }
     }
   }
