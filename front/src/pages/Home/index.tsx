@@ -21,7 +21,7 @@ export const Home = () => {
 
   const { signOut } = useAuth();
   const { addToast } = useToast();
-  const {handleModal} = useModal()
+  const {handleModal, modalConfig} = useModal()
   const { getCards } = useCard();
 
   const [cards, setCards] = useState<ICard[]>([]);
@@ -38,19 +38,19 @@ export const Home = () => {
   }, [addToast, signOut]);
 
   useEffect(() => {
-    const load = async () => {
-      setCards(
-        await getCards()
-      )
-    };
-    load();
-  }, [getCards])
+    if (modalConfig.isOpen === false) {
+      const load = async () => {
+        setCards(
+          await getCards()
+        )
+      };
+      load();
+    }
+  }, [getCards, modalConfig.isOpen])
 
   return (
     <>
-      <Modal 
-        type="add"
-      />
+      <Modal />
       <Container>
         <nav>
           <button
@@ -60,7 +60,15 @@ export const Home = () => {
             Sair
           </button>
           <button
-            onClick={() => handleModal()}
+            onClick={() => handleModal({
+              type: 'add',
+              card: { 
+                id: '',
+                titulo: '',
+                conteudo: '',
+                lista: 'To do'
+              }
+            })}
           >
             <BiTask size={26} />
             Criar Tarefa
@@ -71,36 +79,35 @@ export const Home = () => {
           <div className="tasksWrapper">
             <h2>Tarefas a fazer</h2>
             <div className="scrollLock">
-              <Task/>
-              <Task/>
-              <Task/>
-              <Task/>
-              <Task/>
-              <Task/>
-              <Task/>
-              <Task/>
-              <Task/>
-              <Task/>
-              <Task/>
-              <Task/>
-              <Task/>
-              <Task/>
-              <Task/>
+              {cards.filter(card => card.lista === "To do").map(card => (
+                <Task
+                  key={card.id}
+                  card={card}
+                />
+              ))}
             </div>
           </div>
           <div className="tasksWrapper">
             <h2>Tarefas em andamento</h2>
             <div className="scrollLock">
-              <Task/>
-              
-              <Task/>
-              <Task/>
-              <Task/>
-              <Task/>
+              {cards.filter(card => card.lista === "Doing").map(card => (
+                <Task
+                  key={card.id}
+                  card={card}
+                />
+              ))}
             </div>
           </div>
           <div className="tasksWrapper">
             <h2>Tarefas concluídas</h2>
+            <div className="scrollLock">
+              {cards.filter(card => card.lista === "Done").map(card => (
+                <Task
+                  key={card.id}
+                  card={card}
+                />
+              ))}
+            </div>
           </div>
         </main>
       </Container>

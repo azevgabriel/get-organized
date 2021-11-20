@@ -2,21 +2,40 @@ import { Container } from './styles'
 import { AiOutlineEye } from 'react-icons/ai'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import { FiEdit } from 'react-icons/fi'
+import { useModal } from '../../contexts/modal';
+import { ICard } from '../../interfaces/Card';
 
-export const Task = () => {
+interface ITask {
+  card: ICard;
+}
+
+export const Task = ({card}: ITask) => {
+
+  const { handleModal } = useModal();
+
   return (
     <Container>
       <div className="titleContent">
-        <h3>Tarefa 01 - Limpar o escrítorio</h3>
+        <h3>{card.titulo}</h3>
       </div>
       <div className="buttonsContent">
         <button>
           <AiOutlineEye size={23}/>
         </button>
-        <button>
+        <button
+          onClick={() => handleModal({
+            type: "edit", 
+            card: card
+          })}
+        >
           <FiEdit size={18}/>
         </button>
-        <button>
+        <button
+          onClick={() => handleModal({
+            type:"delete", 
+            card: card
+          })}
+        >
           <RiDeleteBinLine size={20}/>
         </button>
       </div>

@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 
 interface ContainerProps {
   isOpen: boolean;
+  type: 'delete' | 'edit' | 'add';
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -16,7 +17,7 @@ export const Container = styled.div<ContainerProps>`
   border-radius: 6px;
 
   box-shadow: 4px 6px 8px var(--color-shadow-dark);
-  transition: all .5s ease-in;
+  transition: transform .5s ease-in, opacity .5s ease-in;
 
   ${props => props.isOpen ? 
       css`
@@ -28,6 +29,13 @@ export const Container = styled.div<ContainerProps>`
         transform: rotateY(90deg);
         opacity: 0;
       `   
+  };
+
+  ${props => props.type === 'delete' &&
+    css`
+      top: 30vh;
+      height: 40vh;
+    ` 
   };
 
   display: flex;
@@ -45,6 +53,13 @@ export const Container = styled.div<ContainerProps>`
     justify-content: flex-start;
     align-items: flex-start;
   
+    p {
+      margin-top: 1.2rem; 
+      font-size: 1.2rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
     label {
       margin-top: 1.2rem; 
       margin-bottom: 0.2rem;

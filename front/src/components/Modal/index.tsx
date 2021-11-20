@@ -6,16 +6,15 @@ import { Container } from './styles';
 import { useCard } from '../../contexts/card';
 import { useToast } from '../../contexts/toast';
 
-interface ModalProps {
-  type: "add" | "edit" | "delete";
-}
+export const Modal = () => {
 
-export const Modal = ({type}: ModalProps) => {
-
-  const {handleModal, isOpenModal} = useModal()
+  const {handleModal, modalConfig} = useModal()
   const {
-    postCard
+    postCard, 
+    deleteCard,
+    putCard
   } = useCard();
+
   const {
     addToast
   } = useToast();
@@ -26,8 +25,13 @@ export const Modal = ({type}: ModalProps) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
+  useEffect(() => {
+    setTitle(modalConfig.card.titulo);
+    setContent(modalConfig.card.conteudo);
+  }, [modalConfig.card]);
+
   const handleBody = useCallback(() => {
-    switch(type) {
+    switch(modalConfig.type) {
       case "add":
       case "edit":
         return (
@@ -47,15 +51,19 @@ export const Modal = ({type}: ModalProps) => {
             />
           </div>
         );
-      case "delete":  
-        break;
+      case "delete": 
+        return (
+          <div className="body">
+            <p>Deseja realmente excluir essa tarefa?</p>
+          </div>
+        );
     }
-  }, [content, title, type]);
+  }, [content, title, modalConfig]);
 
   const handleSubmit = useCallback(async () => {
     let response;
     
-    switch(type) {
+    switch(modalConfig.type) {
       case "add":
         try {
           console.log(title, content);
@@ -71,7 +79,15 @@ export const Modal = ({type}: ModalProps) => {
           });
           setTitle("");
           setContent("");
-          handleModal();
+          handleModal({
+            type: "add",
+            card: {
+              id: "",
+              titulo: title,
+              conteudo: content,
+              lista: response.lista
+            }
+          });
         } catch(err) {
           if (title === "" || content === "") {
             addToast({
@@ -89,16 +105,89 @@ export const Modal = ({type}: ModalProps) => {
         }
         break;
       case "edit":
-        handleModal();
+        try {
+          console.log(modalConfig.card.id, title, content, modalConfig.card.lista);
+          response = await putCard({
+            id: modalConfig.card.id,
+            titulo: title,
+            conteudo: content,
+            lista: "Doing"
+          });
+          console.log(response);
+          addToast({
+            type: "success",
+            title: `Tarefa: ${response.titulo}`,
+            description: "Editada com sucesso!"
+          });
+          setTitle("");
+          setContent("");
+          handleModal({
+            type: "edit",
+            card: {
+              id: "",
+              titulo: title,
+              conteudo: content,
+              lista: response.lista
+            }
+          });
+        } catch(err) {
+          if (title === "" || content === "") {
+            addToast({
+              type: "error",
+              title: "Erro ao editar tarefa",
+              description: "Preencha todos os campos!"
+            });
+          } else {
+            addToast({
+              type: "error",
+              title: "Erro ao editar tarefa",
+              description: "Tente novamente mais tarde!"
+            });
+          }
+        }
         break;
       case "delete":
-        handleModal();
+        try {
+          console.log(title, content);
+          response = await deleteCard(modalConfig.card.id);
+          addToast({
+            type: "success",
+            title: `Tarefa: ${modalConfig.card.titulo}`,
+            description: "Deletada com sucesso!"
+          });
+          handleModal({
+            type: "delete",
+            card: {
+              id: "",
+              titulo: "",
+              conteudo: "",
+              lista: "To do"
+            }
+          });
+        } catch(err) {
+          addToast({
+            type: "error",
+            title: "Erro ao deletar a tarefa",
+            description: "Tente novamente mais tarde!"
+          });
+        }
         break;
     }
-  }, [addToast, content, handleModal, postCard, title, type]);
+  }, [
+    modalConfig.type, 
+    modalConfig.card.id, 
+    modalConfig.card.titulo, 
+    title, 
+    content, 
+    postCard, 
+    addToast, 
+    handleModal, 
+    putCard, 
+    deleteCard
+  ]);
       
   useEffect(() => {
-    switch(type) {
+    switch(modalConfig.type) {
       case "add":
         setHeaderTitle("Adicionar uma nova tarefa")
         setButtonName("Adicionar")
@@ -112,17 +201,26 @@ export const Modal = ({type}: ModalProps) => {
         setButtonName("Deletar")
         break;
     }
-  }, [type]);
+  }, [modalConfig]);
 
   return (
     <Container
-      isOpen={isOpenModal}
+      isOpen={modalConfig.isOpen}
+      type={modalConfig.type}
     >
       <h1>{headerTitle}</h1>
       {handleBody()}
       <div className="footer">
         <button
-          onClick={() => handleModal()}
+          onClick={() => handleModal({
+            type:`${modalConfig.type}`,
+            card: { 
+              id: "",
+              titulo: title,
+              conteudo: content,
+              lista: "To do"
+            }
+          })}
         >
           Sair        
         </button>
