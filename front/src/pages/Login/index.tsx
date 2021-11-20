@@ -55,7 +55,7 @@ export const Login = () => {
       addToast({
         type: 'success',
         title: 'Logado com sucesso!',
-        description: 'Bem vindo a Get Organized!',
+        description: 'Bem vindo ao Get Organized!',
       });
 
       if (remember === true){

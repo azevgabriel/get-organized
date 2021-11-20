@@ -10,7 +10,7 @@ export const Container = styled.div`
   nav { 
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
 
     width: 100%;
@@ -20,14 +20,16 @@ export const Container = styled.div`
     h1 {
       font-size: 1.8rem;
       margin-right: 2%;
+      margin-left: auto;  
     }
 
     button { 
       display: flex;
       flex-direction: row;
       align-items: center;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       margin-left: 2%;
+      color: var(--color-brown);
 
       svg {
         margin-right: 0.5rem;

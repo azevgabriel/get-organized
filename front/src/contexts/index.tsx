@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { AuthProvider } from './auth';
+import { ModalProvider } from './modal';
 import { ToastProvider } from './toast';
 
 interface AppProviderProps {
@@ -9,9 +10,11 @@ interface AppProviderProps {
 const AppProvider = ({ children }: AppProviderProps) => {
   return (
     <ToastProvider>
-      <AuthProvider>
-        {children}
-      </AuthProvider>
+      <ModalProvider>
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+      </ModalProvider>
     </ToastProvider>
   );
 };
