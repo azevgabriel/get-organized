@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, ReactNode, useEffect } from "react";
+import { createContext, useCallback, useContext, ReactNode, useEffect, useState } from "react";
 import { api } from "../services/api";
 
 interface SignInCredentials {
@@ -9,6 +9,7 @@ interface SignInCredentials {
 interface AuthContextData {
   signIn: (credentials: SignInCredentials) => Promise<void>;
   signOut: () => void;
+  token: string;
 }
 
 interface AuthProviderProps {
@@ -19,11 +20,14 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
   
+  const [token, setToken] = useState("");
+
   useEffect(() => {
     const token = localStorage.getItem("@GetOrganized:TOKEN");
 
     if(token){
       api.defaults.headers.common.authorization = `Bearer ${token}`;
+      setToken(token);
     }
   }, [])
 
@@ -40,18 +44,21 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     } else {
       localStorage.setItem('@GetOrganized:TOKEN', token);
       api.defaults.headers.common.authorization = `Bearer ${token}`;
+      setToken(token);
     }
   }, []);
 
   const signOut = useCallback(() => {
     localStorage.removeItem('@GetOrganized:TOKEN');
+    setToken("");
   }, []);
 
   return (
     <AuthContext.Provider 
       value={{ 
         signIn,
-        signOut
+        signOut,
+        token
       }}
     >
       {children}

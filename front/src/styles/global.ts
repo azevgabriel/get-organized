@@ -5,8 +5,11 @@ export default createGlobalStyle`
     --color-brown: #805E3A;
     --color-white: #FFFFFF;
     --color-beige: #EEEEEE;
-    --color-white-translucent: rgba(255, 255, 255, 0.6);
+    --color-white-translucent: rgba(255, 255, 255, 0.8);
     --color-brown-dark: #6D4C2F;
+    --color-shadow: rgba(0,0,0,0.2);
+    --color-shadow-dark: rgba(0,0,0,0.4);
+    --color-light-gray: #DDDDDD;
     --z-index-toast: 10;
   }
 
@@ -20,7 +23,7 @@ export default createGlobalStyle`
     font-weight: 400;
   }
 
-  h1, h2, h3, h4, h5, h6, strong {
+  h1, h2, h3, h4, h5, h6, strong, button {
     font-family: 'DM Serif Display', serif;
     font-weight: 400;
   }
