@@ -1,8 +1,7 @@
 import { Container } from './styles'
 import { AiOutlineEye } from 'react-icons/ai'
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi'
-// import { RiDeleteBinLine } from 'react-icons/ri'
-// import { FiEdit } from 'react-icons/fi'
+
 import { ICard } from '../../interfaces/Card';
 import { useCard } from '../../contexts/card';
 import { useCallback } from 'react';
