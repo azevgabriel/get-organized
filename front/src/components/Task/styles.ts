@@ -21,9 +21,14 @@ export const Container = styled.div`
     align-items: center;
     width: 70%;  
     height: 100%; 
-    padding-left: 2%;
+    padding: 0 2%;
     border-radius: 5px 0px 0px 5px;
     background-color: var(--color-white);
+    
+    h3 {
+      white-space: nowrap;
+      overflow: hidden;
+    }
   }
 
   .buttonsContent {

@@ -1,4 +1,4 @@
-import AppProvider from './contexts';
+import AppProvider from './hooks';
 import GlobalStyle from './styles/global';
 import { Routes } from './routes';
 

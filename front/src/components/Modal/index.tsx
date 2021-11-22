@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { useModal } from '../../contexts/modal';
+import { useModal } from '../../hooks/modal';
 import { Container } from './styles';
 
-import { useCard } from '../../contexts/card';
-import { useToast } from '../../contexts/toast';
+import { useCard } from '../../hooks/card';
+import { useToast } from '../../hooks/toast';
 
 import { RiDeleteBinLine } from 'react-icons/ri'
 import { FiEdit } from 'react-icons/fi'

@@ -24,7 +24,7 @@ const CardContext = createContext<CardContextData>({} as CardContextData);
 
 const CardProvider = ({ children }: CardProviderProps) => {
   
-  const [apiCalled, setApiCalled] = useState(false);
+  const [apiCalled, setApiCalled] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("@GetOrganized:TOKEN");

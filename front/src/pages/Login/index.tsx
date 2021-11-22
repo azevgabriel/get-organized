@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { Container } from './styles'
 
 /* Contexts */
-import { useAuth } from '../../contexts/auth';
-import { useToast } from '../../contexts/toast';
+import { useAuth } from '../../hooks/auth';
+import { useToast } from '../../hooks/toast';
 
 /* Assets */
 import {AiFillEye, AiFillEyeInvisible} from 'react-icons/ai'

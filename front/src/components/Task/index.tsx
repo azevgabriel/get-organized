@@ -3,9 +3,9 @@ import { AiOutlineEye } from 'react-icons/ai'
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi'
 
 import { ICard } from '../../interfaces/Card';
-import { useCard } from '../../contexts/card';
+import { useCard } from '../../hooks/card';
 import { useCallback } from 'react';
-import { useModal } from '../../contexts/modal';
+import { useModal } from '../../hooks/modal';
 
 interface ITask {
   card: ICard;

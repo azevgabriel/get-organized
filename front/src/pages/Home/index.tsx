@@ -5,14 +5,14 @@ import { Container } from './styles'
 import { Modal } from '../../components/Modal';
 
 /* Contexts */
-import { useAuth } from '../../contexts/auth'
-import { useToast } from '../../contexts/toast';
+import { useAuth } from '../../hooks/auth'
+import { useToast } from '../../hooks/toast';
 
 /* Assets */
 import { IoIosExit } from 'react-icons/io'
 import { BiTask } from 'react-icons/bi'
-import { useModal } from '../../contexts/modal';
-import { useCard } from '../../contexts/card';
+import { useModal } from '../../hooks/modal';
+import { useCard } from '../../hooks/card';
 
 import { ICard } from '../../interfaces/Card';
 import { Task } from '../../components/Task';
@@ -21,7 +21,7 @@ export const Home = () => {
 
   const { signOut } = useAuth();
   const { addToast } = useToast();
-  const {handleModal, modalConfig } = useModal()
+  const { handleModal, modalConfig } = useModal()
   const { getCards, apiCalled } = useCard();
 
   const [cards, setCards] = useState<ICard[]>([]);
@@ -37,16 +37,21 @@ export const Home = () => {
 
   }, [addToast, signOut]);
 
+  const load = useCallback(async () => {
+    setCards(
+      await getCards()
+    )
+  }, [getCards]);
+
   useEffect(() => {
-    if (apiCalled === true) {
-      const load = async () => {
-        setCards(
-          await getCards()
-        )
-      };
+    load();
+  }, [load])
+
+  useEffect(() => {
+    if(apiCalled) {
       load();
     }
-  }, [apiCalled, getCards])
+  }, [apiCalled, load])
 
   return (
     <>
