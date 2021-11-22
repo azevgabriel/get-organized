@@ -15,7 +15,7 @@ export const Container = styled.div<ContainerProps>`
   top: 15vh;
   left: 20vw;
 
-  background: var(--color-white);
+  background: var(--color-beige);
   border-radius: 6px;
 
   box-shadow: 4px 6px 8px var(--color-shadow-dark);
