@@ -69,8 +69,9 @@ yarn start
 
 6. Abrirá em seu navegador padrão esse site.
 <img  src="front/src/assets/login_print.png" widht="100%" />
- - Coloque as credenciais de acesso: 
-    - Usuário: letscode
+
+- Coloque as credenciais de acesso: 
+    - Usuário: letscode 
     - Senha: lets@123
 
 7. Usufrua da plataforma. :D
