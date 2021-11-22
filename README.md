@@ -3,6 +3,7 @@
 <p align="center">
  <a href="#Objetivo">Objetivo</a> •
  <a href="#Pré-requisitos">Pré-requisitos</a> • 
+ <a href="#Imagens">Imagens</a> • 
  <a href="#Tecnologias">Tecnologias</a> • 
  <a href="#Autor">Autor</a>
 </p>
