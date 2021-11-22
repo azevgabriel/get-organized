@@ -49,7 +49,11 @@ export const Container = styled.div`
         border-radius: 0px 5px 5px 0px;
         border-right: 0px ;
       }
-     
+
+      &:disabled {
+        filter: grayscale(0.7);
+        cursor: default;
+      }     
 
     }
 

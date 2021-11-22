@@ -10,6 +10,7 @@ export default createGlobalStyle`
     --color-shadow: rgba(0,0,0,0.2);
     --color-shadow-dark: rgba(0,0,0,0.4);
     --color-light-gray: #DDDDDD;
+    --color-gray: #999999;
 
     --z-index-toast: 20;
     --z-index-modal: 15;
@@ -61,15 +62,15 @@ export default createGlobalStyle`
 
   ::-webkit-scrollbar {
     width: 8px;
-    height: 2px;
-    }
+    height: 8px;
+  }
 
   ::-webkit-scrollbar-track {
       background-color: transparent;  
   }
 
   ::-webkit-scrollbar-thumb {
-      background-color: #DDDDDD;
+      background-color: var(--color-gray);
       border-radius: 16px;
       @media (max-width: 1000px) {
           background-color: #aaa;

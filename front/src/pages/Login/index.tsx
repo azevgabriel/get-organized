@@ -139,7 +139,12 @@ export const Login = () => {
             </button>
           </div>
           <div className="rememberMe">
-            <label>Lembrar-me</label>
+            <button
+              className="textButton"
+              onClick={() => setRemember(oldValue => !oldValue)}
+            >
+              Lembrar-me
+            </button>
             <label className="switch">
               <input 
                 type="checkbox"

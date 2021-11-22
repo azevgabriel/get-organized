@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, ReactNode, useEffect } from "react";
+import { createContext, useCallback, useContext, ReactNode, useEffect, useState } from "react";
 import { api } from "../services/api";
 import { ICard } from "../interfaces/Card";
 
@@ -9,6 +9,7 @@ interface FormData {
 }
 
 interface CardContextData {
+  apiCalled: boolean;
   getCards: () => Promise<ICard[]>;
   postCard: (data: FormData) => Promise<ICard>;
   putCard: (data: ICard) => Promise<ICard>;
@@ -23,22 +24,27 @@ const CardContext = createContext<CardContextData>({} as CardContextData);
 
 const CardProvider = ({ children }: CardProviderProps) => {
   
+  const [apiCalled, setApiCalled] = useState(false);
+
   useEffect(() => {
     const token = localStorage.getItem("@GetOrganized:TOKEN");
-
+    
     if(token){
       api.defaults.headers.common.authorization = `Bearer ${token}`;
     }
   }, []);
 
   const getCards = useCallback(async():Promise<ICard[]> => {
+    setApiCalled(true);
     const response = await api.get('/cards').catch(err => {
       throw err;
     })
+    setApiCalled(false);
     return response.data;
   }, []);
 
   const postCard = useCallback(async({titulo, conteudo, lista}: FormData): Promise<ICard> => {
+    setApiCalled(true);
     const response = await api.post('/cards', {
       titulo,
       conteudo,
@@ -46,10 +52,12 @@ const CardProvider = ({ children }: CardProviderProps) => {
     }).catch(err => {
       throw err;
     })
+    setApiCalled(false);
     return response.data;
   }, []);
 
   const putCard = useCallback(async({id, titulo, conteudo, lista}: ICard): Promise<ICard> => {
+    setApiCalled(true);
     const response = await api.put(`/cards/${id}`, {
       id,
       titulo,
@@ -58,19 +66,23 @@ const CardProvider = ({ children }: CardProviderProps) => {
     }).catch(err => {
       throw err;
     })
+    setApiCalled(false);
     return response.data;
   }, []);
 
   const deleteCard = useCallback(async(id: string): Promise<ICard[]> => {
+    setApiCalled(true);
     const response = await api.delete(`/cards/${id}`).catch(err => {
       throw err;
     })
+    setApiCalled(false);
     return response.data;
   }, []);
 
   return (
     <CardContext.Provider 
       value={{ 
+        apiCalled,
         getCards,
         postCard,
         putCard,

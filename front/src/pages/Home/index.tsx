@@ -21,8 +21,8 @@ export const Home = () => {
 
   const { signOut } = useAuth();
   const { addToast } = useToast();
-  const {handleModal, modalConfig} = useModal()
-  const { getCards } = useCard();
+  const {handleModal, modalConfig } = useModal()
+  const { getCards, apiCalled } = useCard();
 
   const [cards, setCards] = useState<ICard[]>([]);
 
@@ -38,7 +38,7 @@ export const Home = () => {
   }, [addToast, signOut]);
 
   useEffect(() => {
-    if (modalConfig.isOpen === false) {
+    if (apiCalled === true) {
       const load = async () => {
         setCards(
           await getCards()
@@ -46,7 +46,7 @@ export const Home = () => {
       };
       load();
     }
-  }, [getCards, modalConfig.isOpen])
+  }, [apiCalled, getCards])
 
   return (
     <>

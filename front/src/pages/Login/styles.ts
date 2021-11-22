@@ -61,6 +61,23 @@ export const Container = styled.div`
         margin-bottom: 0.2rem;
       }
 
+      .textButton {
+        font-size: 1rem;
+        width: max-content;
+        height: max-content;
+        background-color: transparent;
+        box-shadow: none;
+        color: var(--color-black);
+        margin-right: 0.5rem;
+
+        &:hover {
+          letter-spacing: 0;
+          background-color: transparent;
+          box-shadow: none;
+          text-decoration: underline;
+        }
+      }
+
       input {
         width: 90%;
         height: 3rem;
@@ -177,7 +194,6 @@ export const Container = styled.div`
 
         label {
           margin: 0;
-          margin-right: 0.5rem;
         }
       }
 

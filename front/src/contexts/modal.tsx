@@ -2,17 +2,18 @@ import { createContext, useCallback, useContext, ReactNode, useState } from "rea
 import { ICard } from "../interfaces/Card";
 
 interface Credentials {
-  type: "add" | "edit" | "delete";
+  type: "add" | "edit" | "delete" | "view";
   card: ICard;
 }
 
 interface ModalContextData {
   modalConfig: ModalConfigProps;
   handleModal: ({type, card}: Credentials) => void;
+  exitModal: ({type, card}: Credentials) => void;
 }
 
 interface ModalConfigProps {
-  type: "add" | "edit" | "delete";
+  type: "add" | "edit" | "delete" | "view";
   isOpen: boolean;
   card: ICard;
 }
@@ -26,7 +27,7 @@ const ModalContext = createContext<ModalContextData>({} as ModalContextData);
 const ModalProvider = ({ children }: ModalProviderProps) => {
   
   const [modalConfig, setModalConfig] = useState<ModalConfigProps>({
-    type: "add",
+    type: "view",
     isOpen: false,
     card: {
       id: "",
@@ -37,7 +38,15 @@ const ModalProvider = ({ children }: ModalProviderProps) => {
   });
 
   const handleModal = useCallback(({type, card}: Credentials): void => {
-    if (modalConfig.isOpen === false) {
+      setModalConfig({
+        type,
+        card,
+        isOpen: true
+      });
+  }, []);
+
+  const exitModal = useCallback(({type, card}: Credentials): void => {
+    if(modalConfig.isOpen === false) {
       setModalConfig({
         type,
         card,
@@ -50,13 +59,14 @@ const ModalProvider = ({ children }: ModalProviderProps) => {
         isOpen: false
       });
     }
-  }, [modalConfig]);
+}, [modalConfig.isOpen]);
   
   return (
     <ModalContext.Provider 
       value={{ 
         modalConfig,
-        handleModal
+        handleModal,
+        exitModal
       }}
     >
       {children}

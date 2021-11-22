@@ -6,9 +6,13 @@ import { Container } from './styles';
 import { useCard } from '../../contexts/card';
 import { useToast } from '../../contexts/toast';
 
+import { RiDeleteBinLine } from 'react-icons/ri'
+import { FiEdit } from 'react-icons/fi'
+
+
 export const Modal = () => {
 
-  const {handleModal, modalConfig} = useModal()
+  const {handleModal, modalConfig, exitModal} = useModal()
   const {
     postCard, 
     deleteCard,
@@ -85,8 +89,14 @@ export const Modal = () => {
             <p>Deseja realmente excluir essa tarefa?</p>
           </div>
         );
+      case "view": 
+        return (
+          <div className="body">
+            <p>{modalConfig.card.conteudo}</p>
+          </div>
+        );
     }
-  }, [modalConfig.type, title, content, progress]);
+  }, [modalConfig.type, modalConfig.card.conteudo, title, content, progress]);
 
   const handleSubmit = useCallback(async () => {
     let response;
@@ -105,7 +115,7 @@ export const Modal = () => {
             title: `Tarefa: ${response.titulo}`,
             description: "Adicionada com sucesso!"
           });
-          handleModal({
+          exitModal({
             type: "add",
             card: {
               id: "",
@@ -143,7 +153,7 @@ export const Modal = () => {
             title: `Tarefa: ${response.titulo}`,
             description: "Editada com sucesso!"
           });
-          handleModal({
+          exitModal({
             type: "edit",
             card: {
               id: "",
@@ -176,7 +186,7 @@ export const Modal = () => {
             title: `Tarefa: ${modalConfig.card.titulo}`,
             description: "Deletada com sucesso!"
           });
-          handleModal({
+          exitModal({
             type: "delete",
             card: {
               id: "",
@@ -201,9 +211,9 @@ export const Modal = () => {
     title, 
     content, 
     progress,
+    exitModal,
     postCard, 
     addToast, 
-    handleModal, 
     putCard, 
     deleteCard
   ]);
@@ -222,6 +232,9 @@ export const Modal = () => {
         setHeaderTitle("Deletar uma tarefa")
         setButtonName("Deletar")
         break;
+      case "view":
+        setHeaderTitle(`Tarefa: ${modalConfig.card.titulo}`)
+        break;
     }
   }, [modalConfig]);
 
@@ -234,7 +247,7 @@ export const Modal = () => {
       {handleBody()}
       <div className="footer">
         <button
-          onClick={() => handleModal({
+          onClick={() => exitModal({
             type:`${modalConfig.type}`,
             card: { 
               id: "",
@@ -246,11 +259,34 @@ export const Modal = () => {
         >
           Sair        
         </button>
-        <button
-          onClick={() => handleSubmit()}
-        >
-          {buttonName}  
-        </button>
+        { modalConfig.type !== 'view' ?
+          <button
+            onClick={() => handleSubmit()}
+          >
+            {buttonName}  
+          </button>
+        : 
+          <>
+            <button
+              onClick={() => handleModal({
+                type: "edit", 
+                card: modalConfig.card
+              })}
+            >
+              <FiEdit />
+              Editar
+            </button>
+            <button
+              onClick={() => handleModal({
+                type: "delete", 
+                card: modalConfig.card
+              })}
+            >
+              <RiDeleteBinLine />
+              Deletar
+            </button>
+          </>
+        }
       </div>
     </Container>
   );

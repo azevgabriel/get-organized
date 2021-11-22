@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 interface ContainerProps {
   isOpen: boolean;
-  type: 'delete' | 'edit' | 'add';
+  type: 'delete' | 'edit' | 'add' | 'view';
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -42,6 +42,7 @@ export const Container = styled.div<ContainerProps>`
       border-radius: 8px;
     ` 
   };
+  
 
   ${props => props.type === 'edit' &&
     css`
@@ -64,7 +65,18 @@ export const Container = styled.div<ContainerProps>`
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-  
+
+    ${props => props.type === 'view' &&
+      css`
+        overflow: auto;
+        height: 70%;
+        p {
+          font-size: 1rem;
+        }
+      ` 
+     
+    };
+
     p {
       margin-top: 1.2rem; 
       font-size: 1.2rem;
@@ -130,6 +142,11 @@ export const Container = styled.div<ContainerProps>`
     align-items: center;
 
     button {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
       width: 30%;
       height: 3rem;
       font-size: 1rem;
@@ -143,6 +160,10 @@ export const Container = styled.div<ContainerProps>`
         
       transition: all 0.2s linear;
       box-shadow: 2px 2px 6px var(--color-shadow-dark);
+
+      svg {
+        margin-right: .5rem;
+      }
 
       &:hover {
         background-color: var(--color-brown-dark);
