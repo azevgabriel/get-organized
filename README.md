@@ -29,7 +29,7 @@ No seu terminal Git, faça os seguintes comandos.
 
 1. Clone este repositório.
 ```bash
-git clone <https://github.com/azevgabriel/get-organized>
+git clone https://github.com/azevgabriel/get-organized
 ```
 
 2. Acesse a pasta do projeto no terminal/cmd.
