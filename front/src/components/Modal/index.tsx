@@ -9,6 +9,11 @@ import { useToast } from '../../hooks/toast';
 import { RiDeleteBinLine } from 'react-icons/ri'
 import { FiEdit } from 'react-icons/fi'
 
+import { JSDOM } from 'jsdom';
+import DOMPurify from 'dompurify'
+import { marked } from 'marked';
+import ReactHtmlParser from 'react-html-parser';
+
 
 export const Modal = () => {
 
@@ -90,9 +95,13 @@ export const Modal = () => {
           </div>
         );
       case "view": 
+        const html_body = marked.parse(modalConfig.card.conteudo);
+        const  {window} = new JSDOM(html_body);
+        // @ts-ignore
+        const domPurify = DOMPurify(window);
         return (
           <div className="body">
-            <p>{modalConfig.card.conteudo}</p>
+            {ReactHtmlParser(domPurify.sanitize(html_body))}
           </div>
         );
     }

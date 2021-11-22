@@ -34,6 +34,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       throw new Error('Invalid credentials');
     } else {
       localStorage.setItem('@GetOrganized:TOKEN', token);
+      api.defaults.headers.common.authorization = `Bearer ${token}`;
       setToken(token);
     }
   }, []);

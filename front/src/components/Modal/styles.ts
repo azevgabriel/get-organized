@@ -46,8 +46,8 @@ export const Container = styled.div<ContainerProps>`
 
   ${props => props.type === 'edit' &&
     css`
-      top: 10vh;
-      height: 80vh;
+      top: 5vh;
+      height: 90vh;
     ` 
   };
 
@@ -65,6 +65,7 @@ export const Container = styled.div<ContainerProps>`
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    margin: 1.2rem 0;
 
     ${props => props.type === 'view' &&
       css`
@@ -78,15 +79,19 @@ export const Container = styled.div<ContainerProps>`
     };
 
     p {
-      margin-top: 1.2rem; 
       font-size: 1.2rem;
       margin-left: auto;
       margin-right: auto;
     }
 
     label {
-      margin-top: 1.2rem; 
       margin-bottom: 0.2rem;
+      margin-top: 1.2rem;
+      
+      &:first-child {
+        margin-top: 0;
+      }
+      
     }
 
     input, textarea {
@@ -112,7 +117,6 @@ export const Container = styled.div<ContainerProps>`
     }
 
     select {
-      margin-bottom: 1.2rem;
       width: 100%;
       height: 3rem;
       font-size: 1rem;  
