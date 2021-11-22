@@ -6,6 +6,8 @@ interface ContainerProps {
 }
 
 export const Container = styled.div<ContainerProps>`
+  
+  
   position: absolute;
   z-index: var(--z-index-modal);
   width: 60vw;
@@ -34,7 +36,17 @@ export const Container = styled.div<ContainerProps>`
   ${props => props.type === 'delete' &&
     css`
       top: 30vh;
+      left: 30vw;
       height: 40vh;
+      width: 40vw;
+      border-radius: 8px;
+    ` 
+  };
+
+  ${props => props.type === 'edit' &&
+    css`
+      top: 10vh;
+      height: 80vh;
     ` 
   };
 
@@ -85,7 +97,25 @@ export const Container = styled.div<ContainerProps>`
       padding: 2%;
       height: 50%;
       resize: none;
-      margin-bottom: 1.2rem; 
+    }
+
+    select {
+      margin-bottom: 1.2rem;
+      width: 100%;
+      height: 3rem;
+      font-size: 1rem;  
+      padding: 0 2%;
+
+      border: 1px solid var(--color-white);
+      background-color: var(--color-white);
+      border-radius: 5px;
+      box-shadow: 2px 2px 3px var(--color-shadow);
+
+      option {
+        font-size: 1rem;
+        
+      }
+
     }
   }
 

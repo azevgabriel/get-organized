@@ -11,8 +11,9 @@ export default createGlobalStyle`
     --color-shadow-dark: rgba(0,0,0,0.4);
     --color-light-gray: #DDDDDD;
 
-    --z-index-toast: 15;
-    --z-index-modal: 10;
+    --z-index-toast: 20;
+    --z-index-modal: 15;
+    --z-index-blur: 10;
   }
 
   * {

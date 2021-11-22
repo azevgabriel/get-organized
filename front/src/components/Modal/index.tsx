@@ -24,16 +24,17 @@ export const Modal = () => {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [progress, setProgress] = useState('');
 
   useEffect(() => {
     setTitle(modalConfig.card.titulo);
     setContent(modalConfig.card.conteudo);
+    setProgress(modalConfig.card.lista);
   }, [modalConfig.card]);
 
   const handleBody = useCallback(() => {
     switch(modalConfig.type) {
       case "add":
-      case "edit":
         return (
           <div className="body">
             <label>Título</label>
@@ -51,6 +52,33 @@ export const Modal = () => {
             />
           </div>
         );
+      case "edit":
+        return (
+          <div className="body">
+            <label>Título</label>
+            <input
+              type="text"
+              placeholder="Insira o título da sua tarefa aqui."
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <label>Conteúdo</label>
+            <textarea
+              placeholder="Insira o conteúdo da sua tarefa aqui."
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+            <label>Selecione o status da tarefa</label>
+            <select 
+              value={progress}
+              onChange={(e) => setProgress(e.target.value)}
+            >
+              <option value="To do">A fazer</option>
+              <option value="Doing">Fazendo</option>
+              <option value="Done">Feito</option>
+            </select>
+          </div>
+        );
       case "delete": 
         return (
           <div className="body">
@@ -58,7 +86,7 @@ export const Modal = () => {
           </div>
         );
     }
-  }, [content, title, modalConfig]);
+  }, [modalConfig.type, title, content, progress]);
 
   const handleSubmit = useCallback(async () => {
     let response;
@@ -77,8 +105,6 @@ export const Modal = () => {
             title: `Tarefa: ${response.titulo}`,
             description: "Adicionada com sucesso!"
           });
-          setTitle("");
-          setContent("");
           handleModal({
             type: "add",
             card: {
@@ -104,30 +130,26 @@ export const Modal = () => {
           }
         }
         break;
-      case "edit":
+      case "edit":   
         try {
-          console.log(modalConfig.card.id, title, content, modalConfig.card.lista);
-          response = await putCard({
+          const response = await putCard({
             id: modalConfig.card.id,
             titulo: title,
             conteudo: content,
-            lista: "Doing"
+            lista: progress
           });
-          console.log(response);
           addToast({
             type: "success",
             title: `Tarefa: ${response.titulo}`,
             description: "Editada com sucesso!"
           });
-          setTitle("");
-          setContent("");
           handleModal({
             type: "edit",
             card: {
               id: "",
               titulo: title,
               conteudo: content,
-              lista: response.lista
+              lista: progress
             }
           });
         } catch(err) {
@@ -148,7 +170,6 @@ export const Modal = () => {
         break;
       case "delete":
         try {
-          console.log(title, content);
           response = await deleteCard(modalConfig.card.id);
           addToast({
             type: "success",
@@ -179,6 +200,7 @@ export const Modal = () => {
     modalConfig.card.titulo, 
     title, 
     content, 
+    progress,
     postCard, 
     addToast, 
     handleModal, 

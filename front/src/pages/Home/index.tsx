@@ -51,7 +51,7 @@ export const Home = () => {
   return (
     <>
       <Modal />
-      <Container>
+      <Container modalOpen={modalConfig.isOpen}>
         <nav>
           <button
             onClick={() => handleClick()}

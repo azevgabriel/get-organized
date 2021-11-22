@@ -23,7 +23,6 @@ const CardContext = createContext<CardContextData>({} as CardContextData);
 
 const CardProvider = ({ children }: CardProviderProps) => {
   
-
   useEffect(() => {
     const token = localStorage.getItem("@GetOrganized:TOKEN");
 
@@ -52,6 +51,7 @@ const CardProvider = ({ children }: CardProviderProps) => {
 
   const putCard = useCallback(async({id, titulo, conteudo, lista}: ICard): Promise<ICard> => {
     const response = await api.put(`/cards/${id}`, {
+      id,
       titulo,
       conteudo,
       lista

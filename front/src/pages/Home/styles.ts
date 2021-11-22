@@ -1,12 +1,23 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+interface ContainerProps {
+  modalOpen: boolean;
+}
+
+export const Container = styled.div<ContainerProps>`
   width: 100vw;
   height: 100vh;
 
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  transition: filter 0.2s linear;
+
+  ${props => props.modalOpen && 
+      css`
+        filter: blur(5px);
+      `   
+  };
 
   nav { 
     display: flex;
