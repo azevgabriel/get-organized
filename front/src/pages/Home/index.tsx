@@ -59,12 +59,14 @@ export const Home = () => {
       <Container modalOpen={modalConfig.isOpen}>
         <nav>
           <button
+            disabled={modalConfig.isOpen === true ? true : false}
             onClick={() => handleClick()}
           >
             <IoIosExit size={26} />
             Sair
           </button>
           <button
+            disabled={modalConfig.isOpen === true ? true : false}
             onClick={() => handleModal({
               type: 'add',
               card: { 

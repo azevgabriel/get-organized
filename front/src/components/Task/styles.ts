@@ -48,6 +48,7 @@ export const Container = styled.div`
       color: var(--color-white);
       background-color: var(--color-brown);
       border-right: 1px solid var(--color-brown-dark);
+      transition: background-color 0.2s linear;
 
       &:last-child{
         width: 34%;
@@ -55,9 +56,16 @@ export const Container = styled.div`
         border-right: 0px ;
       }
 
+      &:hover {
+        background-color: var(--color-brown-dark);
+      }
+
       &:disabled {
         filter: grayscale(0.7);
         cursor: default;
+        &:hover {
+          background-color: var(--color-brown);
+        }
       }     
 
     }

@@ -51,9 +51,18 @@ export const Container = styled.div<ContainerProps>`
         color: var(--color-beige);
       }
 
-      &:hover {
-        filter: brightness(.8); 
-      }
+
+      ${props => !props.modalOpen ? 
+        css`
+           &:hover {
+            filter: brightness(.8); 
+          }
+        ` :
+        css`
+          cursor: default;
+        `  
+      };
+     
     }
   }
 

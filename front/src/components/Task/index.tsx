@@ -14,7 +14,7 @@ interface ITask {
 export const Task = ({card}: ITask) => {
 
   const {putCard} = useCard();
-  const {handleModal} = useModal();
+  const {handleModal, modalConfig} = useModal();
 
   const handleRightArrow = useCallback(async() => {
 
@@ -63,17 +63,18 @@ export const Task = ({card}: ITask) => {
       <div className="buttonsContent">
         <button
           onClick={handleLeftArrow}
-          disabled={card.lista === 'To do' ? true : false} 
+          disabled={card.lista === 'To do' || modalConfig.isOpen === true  ? true : false} 
         >
           <BiLeftArrow size={23}/>
         </button>
         <button
           onClick={handleRightArrow}
-          disabled={card.lista === 'Done' ? true : false} 
+          disabled={card.lista === 'Done' || modalConfig.isOpen === true ? true : false} 
         >
           <BiRightArrow size={23}/>
         </button>
         <button
+          disabled={modalConfig.isOpen === true ? true : false}
           onClick={() => handleModal({
             type: 'view',
             card: card,
