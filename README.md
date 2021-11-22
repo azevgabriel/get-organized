@@ -76,6 +76,14 @@ yarn start
 
 7. Usufrua da plataforma. :D
 
+### Imagens
+
+#### Editar Tarefa
+<img  src="front/src/assets/edit_print.png" widht="100%" />
+
+#### Vizualizar Tarefa
+<img  src="front/src/assets/view_print.png" widht="100%" />
+
 ### Tecnologias
 
 As seguintes ferramentas foram usadas na construção do projeto:
